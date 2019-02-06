@@ -1,8 +1,11 @@
 import { Controller, Post, Req, Body, Delete, Param, Get, Query } from '@nestjs/common';
-import { Game } from '../models/interfaces/game';
+import { Game } from './models/interfaces/game';
+import { GameService } from './game.service';
 
 @Controller('game')
 export class GameController {
+
+    constructor(private readonly gameservice: GameService){}
 
     @Post()
     setGame(@Body() createGame: Game ){
@@ -11,7 +14,7 @@ export class GameController {
 
     @Get()
     findAll(@Query() query){
-        return;
+        return this.gameservice.getGames();
     }
 
     @Delete(':id')
